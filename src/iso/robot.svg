@@ -1,0 +1,103 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="-55.445 -94 110.89 146"
+     class="iso iso--robot" role="img" aria-hidden="true" focusable="false">
+  <title>Robot holding a pencil</title>
+  <defs>
+    <filter id="fw-contact" x="-60%" y="-140%" width="220%" height="380%">
+      <feGaussianBlur stdDeviation="6"/>
+    </filter>
+    <clipPath id="fw-clip-robot">
+      <polygon points="-6.928,-18 -20.785,-10 -20.785,-34 -6.928,-42"/>
+      <polygon points="-29.445,-15 -20.785,-10 -20.785,-34 -29.445,-39"/>
+      <polygon points="-27.713,-2 3.464,16 3.464,-18 -27.713,-36"/>
+      <polygon points="-15.588,-47 -6.928,-42 -20.785,-34 -29.445,-39"/>
+      <polygon points="-3.464,-50 27.713,-32 3.464,-18 -27.713,-36"/>
+      <polygon points="27.713,2 3.464,16 3.464,-18 27.713,-32"/>
+      <polygon points="29.445,3 15.588,11 15.588,-13 29.445,-21"/>
+      <polygon points="6.928,6 15.588,11 15.588,-13 6.928,-18"/>
+      <polygon points="-20.785,-35 1.732,-22 1.732,-44 -20.785,-57"/>
+      <polygon points="-1.732,-68 20.785,-55 1.732,-44 -20.785,-57"/>
+      <polygon points="20.785,-33 1.732,-22 1.732,-44 20.785,-55"/>
+      <polygon points="20.785,-26 29.445,-21 15.588,-13 6.928,-18"/>
+      <polygon points="24.249,-15 19.053,-12 19.053,-46 24.249,-49"/>
+      <polygon points="13.856,-15 19.053,-12 19.053,-46 13.856,-49"/>
+      <polygon points="19.053,-52 24.249,-49 19.053,-46 13.856,-49"/>
+    </clipPath>
+  </defs>
+
+  <ellipse cx="0"
+             cy="0"
+             rx="41.641"
+             ry="24"
+             fill="var(--ink)" opacity="0.09" filter="url(#fw-contact)"/>
+
+  <g class="iso__body">
+      <polygon points="-6.928,-18 -20.785,-10 -20.785,-34 -6.928,-42" fill="var(--oxford-shadow)" stroke="var(--oxford-shadow)"
+             stroke-width="10" stroke-linejoin="round" paint-order="stroke fill"/>
+      <polygon points="-29.445,-15 -20.785,-10 -20.785,-34 -29.445,-39" fill="var(--oxford)" stroke="var(--oxford)"
+             stroke-width="10" stroke-linejoin="round" paint-order="stroke fill"/>
+      <polygon points="-27.713,-2 3.464,16 3.464,-18 -27.713,-36" fill="var(--oxford)" stroke="var(--oxford)"
+             stroke-width="10" stroke-linejoin="round" paint-order="stroke fill"/>
+      <polygon points="-15.588,-47 -6.928,-42 -20.785,-34 -29.445,-39" fill="var(--oxford-light)" stroke="var(--oxford-light)"
+             stroke-width="10" stroke-linejoin="round" paint-order="stroke fill"/>
+      <polygon points="-3.464,-50 27.713,-32 3.464,-18 -27.713,-36" fill="var(--oxford-light)" stroke="var(--oxford-light)"
+             stroke-width="10" stroke-linejoin="round" paint-order="stroke fill"/>
+      <polygon points="27.713,2 3.464,16 3.464,-18 27.713,-32" fill="var(--oxford-shadow)" stroke="var(--oxford-shadow)"
+             stroke-width="10" stroke-linejoin="round" paint-order="stroke fill"/>
+      <polygon points="29.445,3 15.588,11 15.588,-13 29.445,-21" fill="var(--oxford-shadow)" stroke="var(--oxford-shadow)"
+             stroke-width="10" stroke-linejoin="round" paint-order="stroke fill"/>
+      <polygon points="6.928,6 15.588,11 15.588,-13 6.928,-18" fill="var(--oxford)" stroke="var(--oxford)"
+             stroke-width="10" stroke-linejoin="round" paint-order="stroke fill"/>
+      <polygon points="-20.785,-35 1.732,-22 1.732,-44 -20.785,-57" fill="var(--oxford)" stroke="var(--oxford)"
+             stroke-width="10" stroke-linejoin="round" paint-order="stroke fill"/>
+      <polygon points="-1.732,-68 20.785,-55 1.732,-44 -20.785,-57" fill="var(--oxford-light)" stroke="var(--oxford-light)"
+             stroke-width="10" stroke-linejoin="round" paint-order="stroke fill"/>
+      <polygon points="20.785,-33 1.732,-22 1.732,-44 20.785,-55" fill="var(--oxford-shadow)" stroke="var(--oxford-shadow)"
+             stroke-width="10" stroke-linejoin="round" paint-order="stroke fill"/>
+      <polygon points="20.785,-26 29.445,-21 15.588,-13 6.928,-18" fill="var(--oxford-light)" stroke="var(--oxford-light)"
+             stroke-width="10" stroke-linejoin="round" paint-order="stroke fill"/>
+      <polygon points="24.249,-15 19.053,-12 19.053,-46 24.249,-49" fill="var(--pencil)" stroke="var(--pencil)"
+             stroke-width="10" stroke-linejoin="round" paint-order="stroke fill"/>
+      <polygon points="13.856,-15 19.053,-12 19.053,-46 13.856,-49" fill="var(--pencil)" stroke="var(--pencil)"
+             stroke-width="10" stroke-linejoin="round" paint-order="stroke fill"/>
+      <polygon points="19.053,-52 24.249,-49 19.053,-46 13.856,-49" fill="var(--pencil)" stroke="var(--pencil)"
+             stroke-width="10" stroke-linejoin="round" paint-order="stroke fill"/>
+      <line x1="-15.588" y1="-47"
+              x2="-29.445" y2="-39"
+              stroke="var(--oxford-hi)" stroke-width="1.5"
+              stroke-linecap="round" opacity="0.55"/>
+      <line x1="-3.464" y1="-50"
+              x2="-27.713" y2="-36"
+              stroke="var(--oxford-hi)" stroke-width="1.5"
+              stroke-linecap="round" opacity="0.55"/>
+      <line x1="-1.732" y1="-68"
+              x2="-20.785" y2="-57"
+              stroke="var(--oxford-hi)" stroke-width="1.5"
+              stroke-linecap="round" opacity="0.55"/>
+      <line x1="20.785" y1="-26"
+              x2="6.928" y2="-18"
+              stroke="var(--oxford-hi)" stroke-width="1.5"
+              stroke-linecap="round" opacity="0.55"/>
+      <line x1="19.053" y1="-52"
+              x2="13.856" y2="-49"
+              stroke="var(--oxford-hi)" stroke-width="1.5"
+              stroke-linecap="round" opacity="0.55"/>
+      
+      <g transform="matrix(0.866,0.5,0,-1,-9.526,5.5)">
+      <ellipse cx="-6" cy="45" rx="3.4" ry="3.4" fill="var(--oxford-shadow)"/>
+      <ellipse cx="6"  cy="45" rx="3.4" ry="3.4" fill="var(--oxford-shadow)"/>
+    </g>
+  </g>
+
+  <!-- Grain, clipped to the silhouette. Same tile as the headlines: that is
+       what makes the type and the objects one material.
+
+       Root-relative on purpose. These icons are INLINED into a host page
+       (see the note at the top of the file), so a path relative to this file
+       would resolve against the page instead and 404. Every site serves the
+       tile at /tex/. -->
+  <g clip-path="url(#fw-clip-robot)" style="mix-blend-mode:overlay" opacity="0.07">
+    <image href="/tex/felt-1024.png" x="-55.445" y="-94"
+           width="110.89" height="146"
+           preserveAspectRatio="xMidYMid slice"/>
+  </g>
+</svg>

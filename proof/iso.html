@@ -1,0 +1,73 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Feltwork · the isometric object</title>
+<link rel="stylesheet" href="../src/tokens.css">
+<link rel="stylesheet" href="../src/type.css">
+<link rel="stylesheet" href="../src/felt-head.css">
+<style>
+  * { box-sizing: border-box; }
+  body { margin:0; background: var(--paper); padding: var(--s-6) var(--s-5); }
+  .sheet { max-width: 1160px; margin: 0 auto; }
+  .row { margin-bottom: var(--s-6); }
+  .tag { display:block; margin-bottom: var(--s-3); padding-bottom: var(--s-2);
+         border-bottom: 2px solid var(--rule); }
+  .strip { display:flex; align-items:flex-end; gap: var(--s-5); }
+  .iso { display:block; }
+  .s-1 { width: 320px; }
+  .s-2 { width: 140px; }
+  .s-3 { width: 64px; }
+  .plinth {
+    background: var(--chip); border-radius: var(--r-lg);
+    padding: var(--s-4); display:inline-block;
+  }
+  /* §7's hero: one felt headline, one isometric object beside it, nothing else. */
+  .hero { display:flex; align-items:center; gap: var(--s-6); flex-wrap: wrap; }
+  .hero h1 { flex: 1 1 420px; margin:0; }
+  .hero .iso { flex: 0 0 300px; width: 300px; }
+  .note { color: var(--text-mute); font-size: var(--caption); margin-top: var(--s-2); }
+</style>
+</head>
+<body>
+<script>
+  document.write('<div id="fw-filters"></div>');
+  fetch("../src/filters.svg").then(r=>r.text()).then(s=>{
+    document.getElementById("fw-filters").innerHTML = s; });
+
+  /* Inline, not <img src>. An SVG in an <img> is an isolated document and
+     cannot see --canary-light, so it renders black. Production inlines these
+     as components; the proof page fetches them to keep one source of truth. */
+  addEventListener("DOMContentLoaded", () => {
+    document.querySelectorAll("[data-iso]").forEach(async (host) => {
+      host.innerHTML = await (await fetch(`../src/iso/${host.dataset.iso}.svg`)).text();
+      host.querySelector("svg").removeAttribute("class");
+    });
+  });
+</script>
+
+<div class="sheet">
+
+  <div class="row">
+    <span class="tag label">01 / §7 hero — one headline, one object, nothing else</span>
+    <div class="hero">
+      <h1 class="felt-head">Under Construction</h1>
+      <span class="iso" data-iso="rocket"></span>
+    </div>
+  </div>
+
+  <div class="row">
+    <span class="tag label">02 / The object at three sizes, on its chip plinth</span>
+    <div class="strip">
+      <span class="plinth"><span class="iso s-1" data-iso="rocket"></span></span>
+      <span class="plinth"><span class="iso s-2" data-iso="rocket"></span></span>
+      <span class="plinth"><span class="iso s-3" data-iso="rocket"></span></span>
+    </div>
+    <p class="note">Canary = things that shipped. Top face light, left base,
+      right shadow — table lookup, never computed.</p>
+  </div>
+
+</div>
+</body>
+</html>

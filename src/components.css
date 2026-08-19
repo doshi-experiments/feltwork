@@ -1,0 +1,193 @@
+/* ─────────────────────────────────────────────────────────────────────────
+   FELTWORK · components
+
+   EVERYTHING COMPRESSES. NOTHING LIFTS.
+
+   This inverts the usual web convention and it is the central interaction
+   principle. A Braun control had honest mechanical travel; a plush object
+   squashes. Compression is fast, recovery is slow with a slight overshoot,
+   and that asymmetry is the whole feel of the system — get the two durations
+   right and the material sells itself.
+   ───────────────────────────────────────────────────────────────────────── */
+
+/* ── the pressable ───────────────────────────────────────────────────────── */
+
+.pressable {
+  transition: transform var(--release), box-shadow var(--release);
+  will-change: transform;
+}
+
+.pressable:hover {
+  transform: translateY(1px) scale(0.992);
+  box-shadow: var(--lift-1);
+}
+
+/* Note the scaleX GROWTH: squashed foam displaces sideways. Without it the
+   press reads as a shrink rather than a compression. */
+.pressable:active {
+  transform: translateY(2px) scaleY(0.975) scaleX(1.008);
+  box-shadow: var(--press);
+  transition-duration: var(--squash);
+}
+
+/* ── cards — the modular units hung off the rail ─────────────────────────── */
+
+.card {
+  position: relative;
+  background: var(--chip);
+  border-radius: var(--r-lg);
+  box-shadow: var(--lift-1);
+  padding: var(--s-4);
+  overflow: hidden;
+  /* equal height within a row — modular units are the same size */
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+}
+
+/* the 4px seam of the section hue, down the left edge */
+.card::before {
+  content: "";
+  position: absolute;
+  left: 0; top: 0; bottom: 0;
+  width: 4px;
+  background: var(--seam, var(--rule));
+}
+
+/* The plinth is a fixed 16:9 well, not a shrink-wrap. The four objects have
+   very different aspect ratios — the rocket is tall, the banknotes are flat —
+   so sizing the plinth to its contents makes cards in the same row disagree
+   about their height, and a shelving system with uneven shelves is a pile.
+   Fixing the well and letting each object sit inside it keeps the row modular. */
+.card__plinth {
+  background: var(--paper);
+  border-radius: var(--r-md);
+  padding: var(--s-3);
+  margin-bottom: var(--s-3);
+  display: grid;
+  place-items: center;
+  /* A fixed height, not an aspect-ratio. aspect-ratio on a fluid grid column
+     produces a fractional height that drifts off the 8px rail with the
+     viewport, and §7 asks every block to be a multiple of --u. 160 = 20 × 8. */
+  height: 160px;
+  /* The card is a flex column, so without this the plinth is the thing that
+     gives when a row stretches to its tallest sibling — it shrinks a few px
+     off the rail and the wells stop lining up across a row. */
+  flex-shrink: 0;
+}
+.card__plinth svg {
+  width: auto;
+  height: 100%;
+  max-width: 100%;
+  max-height: 128px;
+}
+
+.card__name { margin-bottom: var(--s-1); }
+.card__line { color: var(--text-mute); }
+
+/* Hue binding. A section header, its isometric icon and its card seam all
+   share one hue, so the code is learnable in ten seconds without a legend. */
+.hue-canary { --seam: var(--canary); --hue-text: var(--canary-text); }
+.hue-oxford { --seam: var(--oxford); --hue-text: var(--oxford-text); }
+.hue-euca   { --seam: var(--euca);   --hue-text: var(--euca-text); }
+.hue-blush  { --seam: var(--blush);  --hue-text: var(--blush-text); }
+
+.hue-canary .shelf__label, .hue-oxford .shelf__label,
+.hue-euca .shelf__label,   .hue-blush .shelf__label { color: var(--hue-text); }
+
+/* ── buttons ─────────────────────────────────────────────────────────────
+   Filled with the section hue, text in --ink-deep. No border, no gradient,
+   no glow. --ink-deep on every felt surface clears AA (canary 8.94, euca
+   6.65, blush 6.37, oxford 5.49) and does so in both themes, because the
+   felt does not change colour between them. */
+
+.btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 48px;
+  padding: 0 var(--s-4);
+  border-radius: var(--r-pill);
+  background: var(--seam, var(--canary));
+  color: var(--ink-deep);
+  font-family: var(--face-body);
+  font-weight: 500;
+  font-size: var(--body);
+  text-decoration: none;
+}
+
+.btn--quiet {
+  background: var(--chip);
+  color: var(--text);
+  box-shadow: inset 0 0 0 2px var(--rule);
+}
+
+/* ── links in prose ──────────────────────────────────────────────────────
+   --ink text with a 2px pencil underline offset 4px. On hover the underline
+   THICKENS. It does not change colour and it does not slide — the only thing
+   that happens is more of it. */
+
+.prose a {
+  color: var(--text);
+  text-decoration: underline;
+  text-decoration-color: var(--pencil);
+  text-decoration-thickness: 2px;
+  text-underline-offset: 4px;
+  transition: text-decoration-thickness var(--squash);
+}
+.prose a:hover { text-decoration-thickness: 3px; }
+
+/* ── focus ───────────────────────────────────────────────────────────────
+   3px pencil ring, 3px offset, visible on every interactive element, always.
+   Never removed.
+
+   Pencil is 3.55:1 on paper and 4.27:1 on ink-deep — below the 4.5:1 text
+   floor, which is why §9 forbids it carrying body text, but comfortably over
+   the 3:1 a non-text graphical indicator needs, in both themes. */
+
+:where(a, button, input, select, textarea, summary, [tabindex]):focus-visible {
+  outline: 3px solid var(--pencil);
+  outline-offset: 3px;
+  border-radius: var(--r-pill);
+}
+
+/* ── the page-load reveal ────────────────────────────────────────────────
+   One of exactly TWO orchestrated moments on a page; the hover compression
+   is the other. Nothing else moves. Scattered scroll animations are what
+   make a page read as machine-generated.
+
+   The headline settles, then the objects drop in and squash on landing —
+   the same compression the interaction uses, so the load is teaching the
+   material's behaviour rather than decorating it. */
+
+@keyframes fw-settle {
+  from { opacity: 0; transform: translateY(10px); }
+  to   { opacity: 1; transform: none; }
+}
+
+@keyframes fw-drop {
+  0%   { opacity: 0; transform: translateY(-22px) scaleY(1.04) scaleX(0.97); }
+  62%  { opacity: 1; transform: translateY(0) scaleY(0.94) scaleX(1.05); }
+  100% { opacity: 1; transform: none; }
+}
+
+.reveal { animation: fw-settle var(--calm) both; }
+.reveal--drop { animation: fw-drop 620ms cubic-bezier(.22, 1.1, .36, 1) both; }
+
+/* staggered, but only across the few objects in a hero or one shelf row */
+.reveal:nth-child(2) { animation-delay: 90ms; }
+.reveal:nth-child(3) { animation-delay: 180ms; }
+.reveal:nth-child(4) { animation-delay: 270ms; }
+
+/* ── reduced motion ──────────────────────────────────────────────────────
+   Kills all movement. The compression states still change box-shadow, so a
+   press is still acknowledged — feedback survives, travel does not. */
+
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after {
+    animation-duration: 0.001ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.001ms !important;
+  }
+  .pressable:hover, .pressable:active { transform: none; }
+}

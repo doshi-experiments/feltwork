@@ -1,0 +1,87 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="-71.899 -78.5 146.396 139.5"
+     class="iso iso--cash" role="img" aria-hidden="true" focusable="false">
+  <title>Stack of banknotes</title>
+  <defs>
+    <filter id="fw-contact" x="-60%" y="-140%" width="220%" height="380%">
+      <feGaussianBlur stdDeviation="6"/>
+    </filter>
+    <clipPath id="fw-clip-cash">
+      <polygon points="-8.66,-32 43.301,-2 8.66,18 -43.301,-12"/>
+      <polygon points="-3.464,-39 48.497,-9 13.856,11 -38.105,-19"/>
+      <polygon points="-11.258,-45.5 40.703,-15.5 6.062,4.5 -45.899,-25.5"/>
+      <polygon points="-6.062,-52.5 45.899,-22.5 11.258,-2.5 -40.703,-32.5"/>
+      <polygon points="-43.301,-5 8.66,25 8.66,18 -43.301,-12"/>
+      <polygon points="-38.105,-12 13.856,18 13.856,11 -38.105,-19"/>
+      <polygon points="-45.899,-18.5 6.062,11.5 6.062,4.5 -45.899,-25.5"/>
+      <polygon points="43.301,5 8.66,25 8.66,18 43.301,-2"/>
+      <polygon points="-40.703,-25.5 11.258,4.5 11.258,-2.5 -40.703,-32.5"/>
+      <polygon points="48.497,-2 13.856,18 13.856,11 48.497,-9"/>
+      <polygon points="40.703,-8.5 6.062,11.5 6.062,4.5 40.703,-15.5"/>
+      <polygon points="45.899,-15.5 11.258,4.5 11.258,-2.5 45.899,-22.5"/>
+    </clipPath>
+  </defs>
+
+  <ellipse cx="1.299"
+             cy="0.25"
+             rx="54.198"
+             ry="31.25"
+             fill="var(--ink)" opacity="0.09" filter="url(#fw-contact)"/>
+
+  <g class="iso__body">
+      <polygon points="-8.66,-32 43.301,-2 8.66,18 -43.301,-12" fill="var(--euca-light)" stroke="var(--euca-light)"
+             stroke-width="10" stroke-linejoin="round" paint-order="stroke fill"/>
+      <polygon points="-3.464,-39 48.497,-9 13.856,11 -38.105,-19" fill="var(--euca-light)" stroke="var(--euca-light)"
+             stroke-width="10" stroke-linejoin="round" paint-order="stroke fill"/>
+      <polygon points="-11.258,-45.5 40.703,-15.5 6.062,4.5 -45.899,-25.5" fill="var(--euca-light)" stroke="var(--euca-light)"
+             stroke-width="10" stroke-linejoin="round" paint-order="stroke fill"/>
+      <polygon points="-6.062,-52.5 45.899,-22.5 11.258,-2.5 -40.703,-32.5" fill="var(--euca-light)" stroke="var(--euca-light)"
+             stroke-width="10" stroke-linejoin="round" paint-order="stroke fill"/>
+      <polygon points="-43.301,-5 8.66,25 8.66,18 -43.301,-12" fill="var(--euca)" stroke="var(--euca)"
+             stroke-width="10" stroke-linejoin="round" paint-order="stroke fill"/>
+      <polygon points="-38.105,-12 13.856,18 13.856,11 -38.105,-19" fill="var(--euca)" stroke="var(--euca)"
+             stroke-width="10" stroke-linejoin="round" paint-order="stroke fill"/>
+      <polygon points="-45.899,-18.5 6.062,11.5 6.062,4.5 -45.899,-25.5" fill="var(--euca)" stroke="var(--euca)"
+             stroke-width="10" stroke-linejoin="round" paint-order="stroke fill"/>
+      <polygon points="43.301,5 8.66,25 8.66,18 43.301,-2" fill="var(--euca-shadow)" stroke="var(--euca-shadow)"
+             stroke-width="10" stroke-linejoin="round" paint-order="stroke fill"/>
+      <polygon points="-40.703,-25.5 11.258,4.5 11.258,-2.5 -40.703,-32.5" fill="var(--euca)" stroke="var(--euca)"
+             stroke-width="10" stroke-linejoin="round" paint-order="stroke fill"/>
+      <polygon points="48.497,-2 13.856,18 13.856,11 48.497,-9" fill="var(--euca-shadow)" stroke="var(--euca-shadow)"
+             stroke-width="10" stroke-linejoin="round" paint-order="stroke fill"/>
+      <polygon points="40.703,-8.5 6.062,11.5 6.062,4.5 40.703,-15.5" fill="var(--euca-shadow)" stroke="var(--euca-shadow)"
+             stroke-width="10" stroke-linejoin="round" paint-order="stroke fill"/>
+      <polygon points="45.899,-15.5 11.258,4.5 11.258,-2.5 45.899,-22.5" fill="var(--euca-shadow)" stroke="var(--euca-shadow)"
+             stroke-width="10" stroke-linejoin="round" paint-order="stroke fill"/>
+      <line x1="-8.66" y1="-32"
+              x2="-43.301" y2="-12"
+              stroke="var(--euca-hi)" stroke-width="1.5"
+              stroke-linecap="round" opacity="0.55"/>
+      <line x1="-3.464" y1="-39"
+              x2="-38.105" y2="-19"
+              stroke="var(--euca-hi)" stroke-width="1.5"
+              stroke-linecap="round" opacity="0.55"/>
+      <line x1="-11.258" y1="-45.5"
+              x2="-45.899" y2="-25.5"
+              stroke="var(--euca-hi)" stroke-width="1.5"
+              stroke-linecap="round" opacity="0.55"/>
+      <line x1="-6.062" y1="-52.5"
+              x2="-40.703" y2="-32.5"
+              stroke="var(--euca-hi)" stroke-width="1.5"
+              stroke-linecap="round" opacity="0.55"/>
+      
+      
+  </g>
+
+  <!-- Grain, clipped to the silhouette. Same tile as the headlines: that is
+       what makes the type and the objects one material.
+
+       Root-relative on purpose. These icons are INLINED into a host page
+       (see the note at the top of the file), so a path relative to this file
+       would resolve against the page instead and 404. Every site serves the
+       tile at /tex/. -->
+  <g clip-path="url(#fw-clip-cash)" style="mix-blend-mode:overlay" opacity="0.07">
+    <image href="/tex/felt-1024.png" x="-71.899" y="-78.5"
+           width="146.396" height="139.5"
+           preserveAspectRatio="xMidYMid slice"/>
+  </g>
+</svg>

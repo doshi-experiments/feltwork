@@ -1,0 +1,156 @@
+/* ─────────────────────────────────────────────────────────────────────────
+   FELTWORK · tokens
+   Braun gave us the grid, the restraint and the honest label.
+   Felt is the material it is all made of.
+
+   This is the ONLY file in the system permitted to contain a raw hex value.
+   Everything downstream consumes these custom properties. Two exceptions are
+   documented and unavoidable:
+     · the pre-paint anti-FOUC script on each site, which must inline a
+       background colour before any stylesheet has loaded;
+     · the calculator, which resolves these tokens to hex strings at boot
+       because Recharts will not resolve var() inside SVG presentation
+       attributes.
+   Both derive from this file rather than duplicating a decision.
+
+   COLOUR IS MEASURED, NOT INVENTED. Every ramp below was sampled from
+   photographs of four felt objects. Do not saturate them, do not "improve"
+   them, do not add a fifth hue.
+   ───────────────────────────────────────────────────────────────────────── */
+
+:root {
+  /* ── the four felt ramps ──────────────────────────────────────────────
+     shadow → core → base → light → highlight.
+     These ARE the lighting model. To shade a face, pick a stop. Never
+     compute one with filter: brightness() and never mix toward black.
+     They are NOT themed: a felt object does not change colour when you
+     move it onto a dark table. See the theme block below.            */
+
+  --canary-shadow:#B7A66C; --canary-core:#C8B97C; --canary:#D6C786;
+  --canary-light:#E6D792;  --canary-hi:#F0E3A5;
+
+  --oxford-shadow:#676E80; --oxford-core:#7D89A0; --oxford:#929CB0;
+  --oxford-light:#A4B1C6;  --oxford-hi:#B7C2D5;
+
+  --euca-shadow:#6F9289;   --euca-core:#779C93;   --euca:#8BB4AB;
+  --euca-light:#99C5BD;    --euca-hi:#A1CCC5;
+
+  --blush-shadow:#B98284;  --blush-core:#C49394;  --blush:#CC9C9E;
+  --blush-light:#DEAFB3;   --blush-hi:#EBC4C8;
+
+  /* ── structural ───────────────────────────────────────────────────────
+     The wooden pencil is the only unfelted material in the source. It is
+     interaction and nothing else: focus, rules, the cursor. Never a
+     category, never body text.
+     There is no black anywhere in this system, including in shadows.   */
+
+  --pencil:#AF7E4D;
+  --ink:#2C3D4E;        /* darkest pixels in the source. A slate navy. */
+  --ink-deep:#1B2733;
+
+  /* ── themed surfaces ──────────────────────────────────────────────────
+     Only the GROUND flips between themes. The felt above does not.     */
+
+  --paper:#FFFFFF;
+  --chip:#F7F7F7;       /* the faint plinth each object sits on */
+
+  --text:var(--ink);                                    /* 11.14:1 on paper */
+  --text-mute:color-mix(in srgb, var(--ink) 72%, #FFFFFF);   /* ~4.9:1 */
+  --text-on-felt:var(--ink-deep);  /* canary 8.94 · euca 6.65 · blush 6.37
+                                      · oxford 5.49 — all AA, both themes */
+
+  --rule:color-mix(in srgb, var(--ink) 12%, transparent);  /* the §7 rail */
+
+  /* text-safe hue variants. The felt ramps are SURFACE colours: as text on
+     white they run 1.7–3.6:1 and all fail. Use these instead.          */
+  --canary-text:#877525;  /* 4.56:1 */
+  --oxford-text:#465166;  /* 7.99:1 */
+  --euca-text:#416C62;    /* 5.92:1 */
+  --blush-text:#763639;   /* 8.91:1 */
+  --pencil-text:#7D562F;  /* 6.47:1 */
+
+  /* ── the rail: 8px base, everything snaps ─────────────────────────── */
+  --u:8px;
+  --s-1:4px; --s-2:8px; --s-3:16px; --s-4:24px; --s-5:40px;
+  --s-6:64px; --s-7:104px; --s-8:168px;
+
+  /* ── radius: plush objects have large, continuous radii ───────────── */
+  --r-sm:10px; --r-md:18px; --r-lg:28px; --r-xl:44px; --r-pill:999px;
+
+  /* ── elevation ────────────────────────────────────────────────────────
+     Felt is thick and light. Objects do not float on a hard drop shadow —
+     they sit. Every shadow is a pair: a tight contact shadow at 8–11% and
+     a wide ambient one at 5–9%. Blur is always >= 3x the y-offset. Nothing
+     exceeds 12%. Tinted with ink; never black.                         */
+
+  --lift-1: 0 1px 2px rgba(44,61,78,.08), 0 4px 12px rgba(44,61,78,.05);
+  --lift-2: 0 2px 4px rgba(44,61,78,.10), 0 12px 28px rgba(44,61,78,.07);
+  --lift-3: 0 3px 6px rgba(44,61,78,.11), 0 28px 60px rgba(44,61,78,.09);
+  --press:  inset 0 2px 5px rgba(44,61,78,.12), 0 1px 1px rgba(44,61,78,.06);
+
+  /* ── motion: foam, not glass ──────────────────────────────────────────
+     Compression is fast, recovery is slow with a slight overshoot. That
+     asymmetry is the entire feel of the system. Everything compresses;
+     nothing lifts.                                                     */
+
+  --squash:140ms cubic-bezier(.34,.8,.4,1);
+  --release:420ms cubic-bezier(.22,1.2,.36,1);
+  --calm:700ms cubic-bezier(.2,.6,.2,1);
+
+  /* ── one global light source. Everything obeys it. ────────────────── */
+  --light-azimuth:215deg;   /* upper-left */
+  --light-elevation:55deg;
+}
+
+/* ─────────────────────────────────────────────────────────────────────────
+   DARK — the ground flips, the felt does not.
+
+   The brief specifies no dark theme, and forbids inventing colour. So this
+   adds ZERO new hues: every value below is either an already-measured ramp
+   stop or an existing structural token, with paper and ink swapping roles.
+
+   Because the felt surfaces never move, every "text on felt" ratio is
+   IDENTICAL in both themes and needs no second audit.
+
+   Elevation inverts: --chip is lighter than --paper here, so cards read as
+   raised by surface lightness. The ink-tinted shadows stay (they are nearly
+   invisible on an ink ground, which is correct — the lightness does the
+   work). Reaching for a black shadow here would be a violation.
+   ───────────────────────────────────────────────────────────────────────── */
+
+:root[data-theme="dark"] {
+  --paper:var(--ink-deep);
+  --chip:var(--ink);
+
+  --text:#FFFFFF;                                        /* 15.17:1 */
+  --text-mute:color-mix(in srgb, #FFFFFF 68%, var(--ink-deep));
+  /* --text-on-felt stays --ink-deep: the felt did not move. */
+
+  --rule:color-mix(in srgb, #FFFFFF 12%, transparent);
+
+  /* coloured text re-grounds on the measured -hi stops */
+  --canary-text:var(--canary-hi);   /* 11.73:1 on ink-deep */
+  --oxford-text:var(--oxford-hi);   /*  8.44:1 */
+  --euca-text:var(--euca-hi);       /*  8.64:1 */
+  --blush-text:var(--blush-hi);     /*  9.58:1 */
+  --pencil-text:var(--canary-light);/* pencil itself is 4.27:1 here — fine as
+                                       a rule or ring, never as text */
+}
+
+/* Every site stamps data-theme pre-paint from the cross-domain sheet-theme
+   cookie, so the attribute is always present. This is a safety net for any
+   context that has not run that script yet. */
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) {
+    --paper:var(--ink-deep);
+    --chip:var(--ink);
+    --text:#FFFFFF;
+    --text-mute:color-mix(in srgb, #FFFFFF 68%, var(--ink-deep));
+    --rule:color-mix(in srgb, #FFFFFF 12%, transparent);
+    --canary-text:var(--canary-hi);
+    --oxford-text:var(--oxford-hi);
+    --euca-text:var(--euca-hi);
+    --blush-text:var(--blush-hi);
+    --pencil-text:var(--canary-light);
+  }
+}

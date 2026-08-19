@@ -1,0 +1,77 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Feltwork · the headline</title>
+<link rel="stylesheet" href="../src/tokens.css">
+<link rel="stylesheet" href="../src/type.css">
+<link rel="stylesheet" href="../src/felt-head.css">
+<style>
+  /* This page is the §10 step-2 gate: the felt headline, alone, on a blank
+     page. Nothing here is system CSS — it is scaffolding for judging the
+     material, and it does not ship. */
+  * { box-sizing: border-box; }
+  body { margin: 0; background: var(--paper); padding: var(--s-6) var(--s-5); }
+  .sheet { max-width: 1160px; margin: 0 auto; }
+  .row { margin-bottom: var(--s-6); }
+  .tag {
+    display: block; margin-bottom: var(--s-3); padding-bottom: var(--s-2);
+    border-bottom: 2px solid var(--rule);
+  }
+  .plain { filter: none; color: var(--text); }
+  .flat { filter: url(#felt-flat); }
+  .floor { font-size: 34px; }
+  .note { color: var(--text-mute); font-size: var(--caption); margin-top: var(--s-2); }
+  .zoom { font-size: 34px; zoom: 4; width: 25%; }
+</style>
+</head>
+<body>
+<script>
+  document.write('<div id="fw-filters"></div>');
+  fetch("../src/filters.svg").then((r) => r.text()).then((svg) => {
+    document.getElementById("fw-filters").innerHTML = svg;
+    document.documentElement.dataset.filtersReady = "1";
+  });
+</script>
+
+<div class="sheet">
+
+  <div class="row">
+    <span class="tag label">01 / Display-1 · the headline</span>
+    <h1 class="felt-head">Under Construction</h1>
+  </div>
+
+  <div class="row">
+    <span class="tag label">02 / Control · same words, no filter</span>
+    <h1 class="plain">Under Construction</h1>
+  </div>
+
+  <div class="row">
+    <span class="tag label">03 / Halo on (left) vs halo dropped — reduced-motion path</span>
+    <h2 class="felt-head">Experiments</h2>
+    <h2 class="flat">Experiments</h2>
+    <p class="note">The flat one is what prefers-reduced-motion gets: same nap,
+      no loose fibers escaping the edge.</p>
+  </div>
+
+  <div class="row">
+    <span class="tag label">04 / Two seeds — no two headlines share a fiber pattern</span>
+    <h2 class="felt-head">Handmade</h2>
+    <h2 class="felt-head felt-head--2">Handmade</h2>
+  </div>
+
+  <div class="row">
+    <span class="tag label">05 / 34px — the floor §5 forbids going below</span>
+    <h2 class="felt-head floor">Nothing is perfect, at first.</h2>
+    <h2 class="plain floor">Nothing is perfect, at first.</h2>
+  </div>
+
+  <div class="row">
+    <span class="tag label">06 / 400% zoom — §12 asks that it still read as fabric</span>
+    <h2 class="felt-head zoom">Felt</h2>
+  </div>
+
+</div>
+</body>
+</html>

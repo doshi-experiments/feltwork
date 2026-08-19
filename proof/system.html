@@ -1,0 +1,103 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Feltwork · the shelving system</title>
+<link rel="stylesheet" href="../src/tokens.css">
+<link rel="stylesheet" href="../src/base.css">
+<link rel="stylesheet" href="../src/type.css">
+<link rel="stylesheet" href="../src/felt-head.css">
+<link rel="stylesheet" href="../src/components.css">
+</head>
+<body>
+<script>
+  document.write('<div id="fw-filters"></div>');
+  fetch("../src/filters.svg").then(r=>r.text()).then(s=>{
+    document.getElementById("fw-filters").innerHTML = s; });
+</script>
+
+<div class="shelf">
+
+  <!-- §7: one felt headline, one isometric object, and nothing else. -->
+  <header class="hero">
+    <div class="hero__head">
+      <h1 class="felt-head reveal">Experiments</h1>
+    </div>
+    <div class="hero__object reveal reveal--drop" data-iso="rocket" aria-hidden="true"></div>
+  </header>
+
+  <section class="shelf__section hue-canary">
+    <span class="shelf__label label">01 / Shipped</span>
+    <div class="grid">
+      <a class="card pressable u-6" href="#">
+        <span class="card__plinth" data-iso="rocket" aria-hidden="true"></span>
+        <h3 class="card__name">Mr. Shake</h3>
+        <p class="card__line">A social deduction party game for one phone and
+          three to twenty people.</p>
+      </a>
+      <a class="card pressable u-6" href="#">
+        <span class="card__plinth" data-iso="cash" aria-hidden="true"></span>
+        <h3 class="card__name">Rent vs Buy</h3>
+        <p class="card__line">Thirty years of renting against owning, on either
+          Canadian or US rules.</p>
+      </a>
+    </div>
+  </section>
+
+  <section class="shelf__section hue-oxford">
+    <span class="shelf__label label">02 / Written</span>
+    <div class="grid">
+      <div class="card pressable u-4">
+        <span class="card__plinth" data-iso="robot" aria-hidden="true"></span>
+        <h3 class="card__name">Notes</h3>
+        <p class="card__line">Nothing filed here yet.</p>
+      </div>
+      <div class="card pressable u-4">
+        <span class="card__plinth" data-iso="robot" aria-hidden="true"></span>
+        <h3 class="card__name">Talks</h3>
+        <p class="card__line">Nothing filed here yet.</p>
+      </div>
+      <div class="card pressable u-4">
+        <span class="card__plinth" data-iso="laptop" aria-hidden="true"></span>
+        <h3 class="card__name">Tools</h3>
+        <p class="card__line">Nothing filed here yet.</p>
+      </div>
+    </div>
+  </section>
+
+  <section class="shelf__section hue-euca">
+    <span class="shelf__label label">03 / Work</span>
+    <div class="grid">
+      <div class="card u-6 pressable">
+        <span class="card__plinth" data-iso="cash" aria-hidden="true"></span>
+        <h3 class="card__name">Eucalyptus carries commercial work</h3>
+        <p class="card__line prose">A hue means one thing and never anything
+          else. <a href="#">This is a prose link</a> — pencil underline,
+          2px, thickening to 3px on hover. It does not change colour and it
+          does not slide.</p>
+      </div>
+      <div class="card u-6 hue-blush pressable">
+        <span class="card__plinth" data-iso="laptop" aria-hidden="true"></span>
+        <h3 class="card__name">Blush is the workshop</h3>
+        <p class="card__line">Experiments, tools, unfinished things.</p>
+        <p style="margin-top:var(--s-3)">
+          <button class="btn">Everything compresses</button>
+          <button class="btn btn--quiet">Nothing lifts</button>
+        </p>
+      </div>
+    </div>
+  </section>
+
+</div>
+
+<script>
+  addEventListener("DOMContentLoaded", () => {
+    document.querySelectorAll("[data-iso]").forEach(async (host) => {
+      host.insertAdjacentHTML("afterbegin",
+        await (await fetch(`../src/iso/${host.dataset.iso}.svg`)).text());
+    });
+  });
+</script>
+</body>
+</html>

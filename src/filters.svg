@@ -1,0 +1,241 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="0" height="0"
+     style="position:absolute" aria-hidden="true" focusable="false">
+  <!--
+    FELTWORK · the felt filter
+    Real texture on live, selectable, accessible text. Not an image, not a
+    canvas, not a PNG of a headline.
+
+    NOTE — this differs from the brief on purpose. The brief puts the halo on
+    a ::before carrying `content: attr(data-text)` with its own filter, while
+    the same element also carries filter:url(#felt). That does not work: a CSS
+    filter applies to the whole subtree, pseudo-elements included, so the halo
+    would be displaced by #felt-halo and then run through #felt AGAIN —
+    double-displaced and pushed through the lighting and multiply stages
+    twice. It also duplicates the headline into generated content, which
+    several screen readers expose, risking an accessible name of
+    "Under Construction Under Construction".
+
+    Folding the halo in as an feMerge branch fixes both, and is cheaper: one
+    filter pass instead of two, against §5's two-headings-per-viewport budget.
+    Markup collapses to plain <h1 class="felt-head">Text</h1>.
+
+    Tuning knobs, in order of impact:
+      baseFrequency on `fibers` (0.7–1.1) — higher is finer, lower shaggier
+      scale on the face displacement (2–4) — above ~4.5 letterforms break down
+      surfaceScale on the lighting — how thick the fabric reads
+      the feComponentTransfer slope/intercept — the contrast escape hatch;
+        if the headline goes muddy, raise intercept
+      seed — change per heading so no two headlines share a fiber pattern.
+        That single detail is most of what makes it read as real material.
+
+    VALUES BELOW ARE TUNED, NOT COPIED. Two differ sharply from the brief:
+
+      surfaceScale 6.5 (brief suggests 1.2–2.5) and the nap baseFrequency
+      0.26/0.32 (brief suggests 0.045/0.062).
+
+    At the brief's numbers the nap is invisible at every display size — the
+    letterforms come out as ragged INK, not felt: a fuzzy edge wrapped around
+    a dead flat interior. The low nap frequency puts one bump every ~20px,
+    which inside a 130px letterform is a gentle gradient nobody reads as
+    fabric, and surfaceScale 1.8 flattens even that. Raising both is what
+    makes the surface read as a woven thing rather than a distressed one.
+    §5 says get this right before building anything else, so it was tuned
+    against a six-variant sweep at 92px and at the 34px floor together
+    (proof/tune.html).
+  -->
+  <defs>
+
+    <filter id="felt" x="-15%" y="-15%" width="130%" height="130%"
+            color-interpolation-filters="sRGB">
+      <feTurbulence type="fractalNoise" baseFrequency="0.78" numOctaves="4"
+                    seed="7" result="fibers"/>
+
+      <!-- halo: loose fibers escaping the edge. Displaced harder, blurred,
+           dimmed, and merged BEHIND the face. -->
+      <feDisplacementMap in="SourceGraphic" in2="fibers" scale="7.0"
+                         xChannelSelector="R" yChannelSelector="G" result="haloRaw"/>
+      <feGaussianBlur in="haloRaw" stdDeviation="0.6" result="haloBlur"/>
+      <feComponentTransfer in="haloBlur" result="halo">
+        <feFuncA type="linear" slope="0.5"/>
+      </feComponentTransfer>
+
+      <!-- face: ragged edge, then nap lit by the one global light source -->
+      <feDisplacementMap in="SourceGraphic" in2="fibers" scale="2.8"
+                         xChannelSelector="R" yChannelSelector="G" result="fuzzy"/>
+      <feTurbulence type="fractalNoise" baseFrequency="0.26 0.32" numOctaves="5"
+                    seed="3" result="nap"/>
+      <feDiffuseLighting in="nap" surfaceScale="6.5" diffuseConstant="1"
+                         lighting-color="#ffffff" result="lit">
+        <feDistantLight azimuth="215" elevation="55"/>
+      </feDiffuseLighting>
+      <feComposite in="lit" in2="fuzzy" operator="in" result="litText"/>
+      <feComponentTransfer in="litText" result="litLift">
+        <feFuncR type="linear" slope="0.76" intercept="0.24"/>
+        <feFuncG type="linear" slope="0.76" intercept="0.24"/>
+        <feFuncB type="linear" slope="0.76" intercept="0.24"/>
+      </feComponentTransfer>
+      <feBlend in="litLift" in2="fuzzy" mode="multiply" result="face"/>
+
+      <feMerge>
+        <feMergeNode in="halo"/>
+        <feMergeNode in="face"/>
+      </feMerge>
+    </filter>
+
+    <!-- Second heading on a page uses a different seed, so the two do not
+         share a fiber pattern. Identical otherwise. -->
+    <filter id="felt-2" x="-15%" y="-15%" width="130%" height="130%"
+            color-interpolation-filters="sRGB">
+      <feTurbulence type="fractalNoise" baseFrequency="0.78" numOctaves="4"
+                    seed="23" result="fibers"/>
+      <feDisplacementMap in="SourceGraphic" in2="fibers" scale="7.0"
+                         xChannelSelector="R" yChannelSelector="G" result="haloRaw"/>
+      <feGaussianBlur in="haloRaw" stdDeviation="0.6" result="haloBlur"/>
+      <feComponentTransfer in="haloBlur" result="halo">
+        <feFuncA type="linear" slope="0.5"/>
+      </feComponentTransfer>
+      <feDisplacementMap in="SourceGraphic" in2="fibers" scale="2.8"
+                         xChannelSelector="R" yChannelSelector="G" result="fuzzy"/>
+      <feTurbulence type="fractalNoise" baseFrequency="0.26 0.32" numOctaves="5"
+                    seed="41" result="nap"/>
+      <feDiffuseLighting in="nap" surfaceScale="6.5" diffuseConstant="1"
+                         lighting-color="#ffffff" result="lit">
+        <feDistantLight azimuth="215" elevation="55"/>
+      </feDiffuseLighting>
+      <feComposite in="lit" in2="fuzzy" operator="in" result="litText"/>
+      <feComponentTransfer in="litText" result="litLift">
+        <feFuncR type="linear" slope="0.76" intercept="0.24"/>
+        <feFuncG type="linear" slope="0.76" intercept="0.24"/>
+        <feFuncB type="linear" slope="0.76" intercept="0.24"/>
+      </feComponentTransfer>
+      <feBlend in="litLift" in2="fuzzy" mode="multiply" result="face"/>
+      <feMerge>
+        <feMergeNode in="halo"/>
+        <feMergeNode in="face"/>
+      </feMerge>
+    </filter>
+
+    <!-- reduced-motion / low-power: the same nap, no halo branch.
+         §5 asks for the halo to drop and the static filter to stay. -->
+    <filter id="felt-flat" x="-8%" y="-8%" width="116%" height="116%"
+            color-interpolation-filters="sRGB">
+      <feTurbulence type="fractalNoise" baseFrequency="0.78" numOctaves="4"
+                    seed="7" result="fibers"/>
+      <feDisplacementMap in="SourceGraphic" in2="fibers" scale="2.8"
+                         xChannelSelector="R" yChannelSelector="G" result="fuzzy"/>
+      <feTurbulence type="fractalNoise" baseFrequency="0.26 0.32" numOctaves="5"
+                    seed="3" result="nap"/>
+      <feDiffuseLighting in="nap" surfaceScale="6.5" diffuseConstant="1"
+                         lighting-color="#ffffff" result="lit">
+        <feDistantLight azimuth="215" elevation="55"/>
+      </feDiffuseLighting>
+      <feComposite in="lit" in2="fuzzy" operator="in" result="litText"/>
+      <feComponentTransfer in="litText" result="litLift">
+        <feFuncR type="linear" slope="0.76" intercept="0.24"/>
+        <feFuncG type="linear" slope="0.76" intercept="0.24"/>
+        <feFuncB type="linear" slope="0.76" intercept="0.24"/>
+      </feComponentTransfer>
+      <feBlend in="litLift" in2="fuzzy" mode="multiply"/>
+    </filter>
+
+
+    <!-- DARK — the felt did not move, but the blend maths did.
+         On dark the headline is white, and `multiply` against white uses the
+         full range of the lighting pass, so the same intercept that reads as
+         wool on ink reads as speckled concrete on white. Compressing the
+         transfer (slope .48 / intercept .52) restores the same apparent nap
+         depth. Nap frequency, displacement, seeds and the light source are
+         untouched — this is the blend compensating for an inverted ground,
+         not a second look. -->
+    <filter id="felt-dark" x="-15%" y="-15%" width="130%" height="130%"
+            color-interpolation-filters="sRGB">
+      <feTurbulence type="fractalNoise" baseFrequency="0.78" numOctaves="4"
+                    seed="7" result="fibers"/>
+
+      <!-- halo: loose fibers escaping the edge. Displaced harder, blurred,
+           dimmed, and merged BEHIND the face. -->
+      <feDisplacementMap in="SourceGraphic" in2="fibers" scale="7.0"
+                         xChannelSelector="R" yChannelSelector="G" result="haloRaw"/>
+      <feGaussianBlur in="haloRaw" stdDeviation="0.6" result="haloBlur"/>
+      <feComponentTransfer in="haloBlur" result="halo">
+        <feFuncA type="linear" slope="0.5"/>
+      </feComponentTransfer>
+
+      <!-- face: ragged edge, then nap lit by the one global light source -->
+      <feDisplacementMap in="SourceGraphic" in2="fibers" scale="2.8"
+                         xChannelSelector="R" yChannelSelector="G" result="fuzzy"/>
+      <feTurbulence type="fractalNoise" baseFrequency="0.26 0.32" numOctaves="5"
+                    seed="3" result="nap"/>
+      <feDiffuseLighting in="nap" surfaceScale="6.5" diffuseConstant="1"
+                         lighting-color="#ffffff" result="lit">
+        <feDistantLight azimuth="215" elevation="55"/>
+      </feDiffuseLighting>
+      <feComposite in="lit" in2="fuzzy" operator="in" result="litText"/>
+      <feComponentTransfer in="litText" result="litLift">
+        <feFuncR type="linear" slope="0.48" intercept="0.52"/>
+        <feFuncG type="linear" slope="0.48" intercept="0.52"/>
+        <feFuncB type="linear" slope="0.48" intercept="0.52"/>
+      </feComponentTransfer>
+      <feBlend in="litLift" in2="fuzzy" mode="multiply" result="face"/>
+
+      <feMerge>
+        <feMergeNode in="halo"/>
+        <feMergeNode in="face"/>
+      </feMerge>
+    </filter>
+    <filter id="felt-dark-2" x="-15%" y="-15%" width="130%" height="130%"
+            color-interpolation-filters="sRGB">
+      <feTurbulence type="fractalNoise" baseFrequency="0.78" numOctaves="4"
+                    seed="23" result="fibers"/>
+      <feDisplacementMap in="SourceGraphic" in2="fibers" scale="7.0"
+                         xChannelSelector="R" yChannelSelector="G" result="haloRaw"/>
+      <feGaussianBlur in="haloRaw" stdDeviation="0.6" result="haloBlur"/>
+      <feComponentTransfer in="haloBlur" result="halo">
+        <feFuncA type="linear" slope="0.5"/>
+      </feComponentTransfer>
+      <feDisplacementMap in="SourceGraphic" in2="fibers" scale="2.8"
+                         xChannelSelector="R" yChannelSelector="G" result="fuzzy"/>
+      <feTurbulence type="fractalNoise" baseFrequency="0.26 0.32" numOctaves="5"
+                    seed="41" result="nap"/>
+      <feDiffuseLighting in="nap" surfaceScale="6.5" diffuseConstant="1"
+                         lighting-color="#ffffff" result="lit">
+        <feDistantLight azimuth="215" elevation="55"/>
+      </feDiffuseLighting>
+      <feComposite in="lit" in2="fuzzy" operator="in" result="litText"/>
+      <feComponentTransfer in="litText" result="litLift">
+        <feFuncR type="linear" slope="0.48" intercept="0.52"/>
+        <feFuncG type="linear" slope="0.48" intercept="0.52"/>
+        <feFuncB type="linear" slope="0.48" intercept="0.52"/>
+      </feComponentTransfer>
+      <feBlend in="litLift" in2="fuzzy" mode="multiply" result="face"/>
+      <feMerge>
+        <feMergeNode in="halo"/>
+        <feMergeNode in="face"/>
+      </feMerge>
+    </filter>
+
+
+    <!-- dark + reduced-motion: no halo, dark blend. -->
+    <filter id="felt-dark-flat" x="-8%" y="-8%" width="116%" height="116%"
+            color-interpolation-filters="sRGB">
+      <feTurbulence type="fractalNoise" baseFrequency="0.78" numOctaves="4"
+                    seed="7" result="fibers"/>
+      <feDisplacementMap in="SourceGraphic" in2="fibers" scale="2.8"
+                         xChannelSelector="R" yChannelSelector="G" result="fuzzy"/>
+      <feTurbulence type="fractalNoise" baseFrequency="0.26 0.32" numOctaves="5"
+                    seed="3" result="nap"/>
+      <feDiffuseLighting in="nap" surfaceScale="6.5" diffuseConstant="1"
+                         lighting-color="#ffffff" result="lit">
+        <feDistantLight azimuth="215" elevation="55"/>
+      </feDiffuseLighting>
+      <feComposite in="lit" in2="fuzzy" operator="in" result="litText"/>
+      <feComponentTransfer in="litText" result="litLift">
+        <feFuncR type="linear" slope="0.48" intercept="0.52"/>
+        <feFuncG type="linear" slope="0.48" intercept="0.52"/>
+        <feFuncB type="linear" slope="0.48" intercept="0.52"/>
+      </feComponentTransfer>
+      <feBlend in="litLift" in2="fuzzy" mode="multiply"/>
+    </filter>
+
+  </defs>
+</svg>

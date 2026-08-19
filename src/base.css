@@ -1,0 +1,140 @@
+/* ─────────────────────────────────────────────────────────────────────────
+   FELTWORK · base — the shelving system
+   Rams designed the Vitsœ 606 in 1960 and it is still sold. The layout is
+   that shelf: a fixed vertical rail with modular units hung off it.
+
+   Also carries the reset. That matters in the calculator, where `@tailwind
+   base` was the only reset in the app — pulling Tailwind without this would
+   shift every margin and form control at once and read as a Feltwork
+   regression.
+   ───────────────────────────────────────────────────────────────────────── */
+
+*, *::before, *::after { box-sizing: border-box; }
+
+html { -webkit-text-size-adjust: 100%; }
+
+body {
+  margin: 0;
+  min-height: 100%;
+  background: var(--paper);
+  color: var(--text);
+  -webkit-font-smoothing: antialiased;
+}
+
+/* Reset the things Preflight was covering. Deliberately small — everything
+   here is a thing the system restyles anyway. */
+h1, h2, h3, h4, p, figure, blockquote, dl, dd { margin: 0; }
+ul[class], ol[class] { list-style: none; margin: 0; padding: 0; }
+img, svg, video, canvas { display: block; max-width: 100%; }
+button, input, select, textarea { font: inherit; color: inherit; }
+button { background: none; border: 0; padding: 0; cursor: pointer; }
+table { border-collapse: collapse; }
+
+/* Links carry no decoration by default. The browser default is a saturated
+   blue underline, which is not in this palette at all — a card wrapped in an
+   <a> would render its whole title in it. Prose links opt back in to the
+   pencil underline in components.css; structural links (cards, nav) get
+   their affordance from the compression instead. */
+a { color: inherit; text-decoration: none; }
+
+/* ── the shelf ────────────────────────────────────────────────────────────
+   ONE continuous vertical rule at the left edge of the content column,
+   running the full page height. This is the only decorative-looking element
+   permitted, and it is not decorative — it is the alignment datum, made
+   visible. Every section label and every card's top edge aligns to it. */
+
+.shelf {
+  position: relative;
+  max-width: 1160px;
+  margin: 0 auto;
+  padding-left: var(--s-5);
+  padding-right: var(--s-4);
+}
+
+.shelf::before {
+  content: "";
+  position: absolute;
+  left: 0;
+  top: 0;
+  bottom: 0;
+  width: 2px;
+  background: var(--rule);
+}
+
+/* Section markers. Numbered sequence is allowed HERE and only here, because
+   the sections genuinely are a fixed order the visitor reads top to bottom. */
+.shelf__section { padding-block: var(--s-7); }
+.shelf__section:first-child { padding-top: var(--s-6); }
+
+.shelf__label {
+  display: block;
+  margin-bottom: var(--s-5);
+  /* pulled left so the number sits against the rail, not beside it */
+  margin-left: calc(var(--s-5) * -1);
+  padding-left: var(--s-4);
+  position: relative;
+}
+
+/* the tick where a shelf bracket would meet the upright */
+.shelf__label::before {
+  content: "";
+  position: absolute;
+  left: 0;
+  top: 50%;
+  width: var(--s-3);
+  height: 2px;
+  background: currentColor;
+  opacity: 0.5;
+}
+
+/* ── the grid ─────────────────────────────────────────────────────────────
+   12 columns, --s-4 gutter. Modular means modular: units span 4 or 6
+   columns. Never 5, never 7 — a shelving system with one odd-width shelf is
+   just a pile. */
+
+.grid {
+  display: grid;
+  grid-template-columns: repeat(12, minmax(0, 1fr));
+  gap: var(--s-4);
+}
+
+.u-4 { grid-column: span 4; }
+.u-6 { grid-column: span 6; }
+.u-12 { grid-column: span 12; }
+
+@media (max-width: 900px) {
+  .u-4 { grid-column: span 6; }
+}
+@media (max-width: 620px) {
+  .u-4, .u-6 { grid-column: span 12; }
+  .shelf { padding-left: var(--s-4); }
+  .shelf__label { margin-left: calc(var(--s-4) * -1); padding-left: var(--s-3); }
+}
+
+/* ── vertical rhythm ──────────────────────────────────────────────────────
+   Every block's height is a multiple of 8px. Enforced by only ever spacing
+   with the rail tokens, all of which are multiples of 8 above --s-1. */
+
+.stack > * + * { margin-top: var(--s-3); }
+.stack--tight > * + * { margin-top: var(--s-2); }
+.stack--loose > * + * { margin-top: var(--s-4); }
+
+/* ── the hero ─────────────────────────────────────────────────────────────
+   One felt headline on --paper, one isometric object beside it, and nothing
+   else. No stats, no gradient, no scroll indicator. The material is the
+   argument. */
+
+.hero {
+  display: flex;
+  align-items: center;
+  gap: var(--s-6);
+  flex-wrap: wrap;
+  padding-block: var(--s-8) var(--s-7);
+}
+.hero__head { flex: 1 1 26rem; min-width: 0; }
+.hero__object { flex: 0 0 auto; width: clamp(160px, 22vw, 280px); }
+
+.visually-hidden {
+  position: absolute; width: 1px; height: 1px; overflow: hidden;
+  clip: rect(0 0 0 0); clip-path: inset(50%); white-space: nowrap;
+}

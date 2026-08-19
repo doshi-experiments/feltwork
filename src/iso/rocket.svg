@@ -1,0 +1,87 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="-56.311 -104 112.622 157.5"
+     class="iso iso--rocket" role="img" aria-hidden="true" focusable="false">
+  <title>Rocket</title>
+  <defs>
+    <filter id="fw-contact" x="-60%" y="-140%" width="220%" height="380%">
+      <feGaussianBlur stdDeviation="6"/>
+    </filter>
+    <clipPath id="fw-clip-rocket">
+      <polygon points="22.517,0 0,13 0,-39 22.517,-52"/>
+      <polygon points="-22.517,0 0,13 0,-39 -22.517,-52"/>
+      <polygon points="2.598,7.5 19.919,17.5 19.919,-4.5 2.598,-14.5"/>
+      <polygon points="-2.598,7.5 -19.919,17.5 -19.919,-4.5 -2.598,-14.5"/>
+      <polygon points="30.311,11.5 19.919,17.5 19.919,-4.5 30.311,-10.5"/>
+      <polygon points="-30.311,11.5 -19.919,17.5 -19.919,-4.5 -30.311,-10.5"/>
+      <polygon points="12.99,-20.5 30.311,-10.5 19.919,-4.5 2.598,-14.5"/>
+      <polygon points="-12.99,-20.5 -2.598,-14.5 -19.919,-4.5 -30.311,-10.5"/>
+      <polygon points="0,-65 22.517,-52 0,-39 -22.517,-52"/>
+      <polygon points="22.517,-52 0,-39 0,-78"/>
+      <polygon points="-22.517,-52 0,-39 0,-78"/>
+    </clipPath>
+  </defs>
+
+  <ellipse cx="0"
+             cy="8"
+             rx="43.373"
+             ry="25"
+             fill="var(--ink)" opacity="0.09" filter="url(#fw-contact)"/>
+
+  <g class="iso__body">
+      <polygon points="22.517,0 0,13 0,-39 22.517,-52" fill="var(--canary-shadow)" stroke="var(--canary-shadow)"
+             stroke-width="10" stroke-linejoin="round" paint-order="stroke fill"/>
+      <polygon points="-22.517,0 0,13 0,-39 -22.517,-52" fill="var(--canary)" stroke="var(--canary)"
+             stroke-width="10" stroke-linejoin="round" paint-order="stroke fill"/>
+      <polygon points="2.598,7.5 19.919,17.5 19.919,-4.5 2.598,-14.5" fill="var(--canary)" stroke="var(--canary)"
+             stroke-width="10" stroke-linejoin="round" paint-order="stroke fill"/>
+      <polygon points="-2.598,7.5 -19.919,17.5 -19.919,-4.5 -2.598,-14.5" fill="var(--canary-shadow)" stroke="var(--canary-shadow)"
+             stroke-width="10" stroke-linejoin="round" paint-order="stroke fill"/>
+      <polygon points="30.311,11.5 19.919,17.5 19.919,-4.5 30.311,-10.5" fill="var(--canary-shadow)" stroke="var(--canary-shadow)"
+             stroke-width="10" stroke-linejoin="round" paint-order="stroke fill"/>
+      <polygon points="-30.311,11.5 -19.919,17.5 -19.919,-4.5 -30.311,-10.5" fill="var(--canary)" stroke="var(--canary)"
+             stroke-width="10" stroke-linejoin="round" paint-order="stroke fill"/>
+      <polygon points="12.99,-20.5 30.311,-10.5 19.919,-4.5 2.598,-14.5" fill="var(--canary-light)" stroke="var(--canary-light)"
+             stroke-width="10" stroke-linejoin="round" paint-order="stroke fill"/>
+      <polygon points="-12.99,-20.5 -2.598,-14.5 -19.919,-4.5 -30.311,-10.5" fill="var(--canary-light)" stroke="var(--canary-light)"
+             stroke-width="10" stroke-linejoin="round" paint-order="stroke fill"/>
+      <polygon points="0,-65 22.517,-52 0,-39 -22.517,-52" fill="var(--canary-light)" stroke="var(--canary-light)"
+             stroke-width="10" stroke-linejoin="round" paint-order="stroke fill"/>
+      <polygon points="22.517,-52 0,-39 0,-78" fill="var(--canary-shadow)" stroke="var(--canary-shadow)"
+             stroke-width="10" stroke-linejoin="round" paint-order="stroke fill"/>
+      <polygon points="-22.517,-52 0,-39 0,-78" fill="var(--canary)" stroke="var(--canary)"
+             stroke-width="10" stroke-linejoin="round" paint-order="stroke fill"/>
+      <line x1="12.99" y1="-20.5"
+              x2="2.598" y2="-14.5"
+              stroke="var(--canary-hi)" stroke-width="1.5"
+              stroke-linecap="round" opacity="0.55"/>
+      <line x1="-12.99" y1="-20.5"
+              x2="-30.311" y2="-10.5"
+              stroke="var(--canary-hi)" stroke-width="1.5"
+              stroke-linecap="round" opacity="0.55"/>
+      <line x1="0" y1="-65"
+              x2="-22.517" y2="-52"
+              stroke="var(--canary-hi)" stroke-width="1.5"
+              stroke-linecap="round" opacity="0.55"/>
+      <polyline points="-22.517,0 -22.517,-52" fill="none"
+              stroke="var(--canary-shadow)" stroke-width="2"
+              stroke-dasharray="1 7" stroke-linecap="round" opacity="0.75"/>
+      <g transform="matrix(0.866,0.5,0,-1,-11.258,6.5)">
+      <ellipse cx="0" cy="34" rx="7.5" ry="7.5"
+               fill="var(--canary-shadow)"
+               stroke="var(--canary-shadow)" stroke-width="3"
+               paint-order="stroke fill" opacity="0.85"/>
+    </g>
+  </g>
+
+  <!-- Grain, clipped to the silhouette. Same tile as the headlines: that is
+       what makes the type and the objects one material.
+
+       Root-relative on purpose. These icons are INLINED into a host page
+       (see the note at the top of the file), so a path relative to this file
+       would resolve against the page instead and 404. Every site serves the
+       tile at /tex/. -->
+  <g clip-path="url(#fw-clip-rocket)" style="mix-blend-mode:overlay" opacity="0.07">
+    <image href="/tex/felt-1024.png" x="-56.311" y="-104"
+           width="112.622" height="157.5"
+           preserveAspectRatio="xMidYMid slice"/>
+  </g>
+</svg>

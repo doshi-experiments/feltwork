@@ -1,0 +1,103 @@
+/* ─────────────────────────────────────────────────────────────────────────
+   FELTWORK · type
+   Three faces, three jobs. All variable, all self-hosted, Latin subset.
+
+   Archivo is not a style preference. Felt texture needs MASS — a thin or
+   condensed display face gives the filter no surface area and the fibers read
+   as noise instead of nap. Set heavy and expanded so each letterform is a
+   slab of fabric. Substitute a lighter face and the headline stops working.
+
+   Martian Mono is the spec plate: the things a Braun product would silk-screen
+   onto its housing. Eyebrows, dates, categories, field labels. Never prose,
+   never above 12px.
+   ───────────────────────────────────────────────────────────────────────── */
+
+@font-face {
+  font-family: "Archivo";
+  src: url("../fonts/Archivo.woff2") format("woff2-variations");
+  font-weight: 100 900;      /* the file carries both axes */
+  font-stretch: 62% 125%;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: "Hanken Grotesk";
+  src: url("../fonts/HankenGrotesk.woff2") format("woff2-variations");
+  font-weight: 100 900;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: "Martian Mono";
+  src: url("../fonts/MartianMono.woff2") format("woff2-variations");
+  font-weight: 100 800;
+  font-stretch: 75% 112.5%;
+  font-style: normal;
+  font-display: swap;
+}
+
+:root {
+  --face-display: "Archivo", "Helvetica Neue", Arial, sans-serif;
+  --face-body: "Hanken Grotesk", system-ui, -apple-system, sans-serif;
+  --face-utility: "Martian Mono", ui-monospace, "SF Mono", Menlo, monospace;
+
+  /* the two display axes, exposed so they stay tunable in one place */
+  --display-wght: 780;   /* §4: 750–800 */
+  --display-wdth: 118%;  /* §4: 112–125 */
+
+  /* type scale — fluid, snapped to the rail at both ends */
+  --display-1: clamp(52px, 9vw, 132px);
+  --display-2: clamp(38px, 5.5vw, 76px);
+  --h3: 28px;
+  --body-lg: 19px;
+  --body: 17px;
+  --caption: 13px;
+  --label: 11px;
+}
+
+body {
+  font-family: var(--face-body);
+  font-weight: 400;
+  font-size: var(--body);
+  line-height: 1.6;
+  color: var(--text);
+  font-synthesis-weight: none;
+  -webkit-text-size-adjust: 100%;
+}
+
+/* prose measure — §4 caps the line at 62ch */
+p, li { max-width: 62ch; }
+
+h1, h2, h3 {
+  font-family: var(--face-display);
+  font-weight: var(--display-wght);
+  font-stretch: var(--display-wdth);
+  letter-spacing: -0.02em;
+  line-height: 0.94;
+  margin: 0;
+  text-wrap: balance;
+}
+
+h1 { font-size: var(--display-1); }
+h2 { font-size: var(--display-2); }
+h3 {
+  font-size: var(--h3);
+  line-height: 1.15;   /* 0.94 is a display setting; it collides at 28px */
+}
+
+.lede { font-size: var(--body-lg); }
+.caption { font-size: var(--caption); color: var(--text-mute); }
+
+/* the spec plate */
+.label {
+  font-family: var(--face-utility);
+  font-weight: 500;
+  font-stretch: 87.5%;
+  font-size: var(--label);
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  line-height: 1;
+  color: var(--text-mute);
+}

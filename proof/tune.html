@@ -1,0 +1,70 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>Feltwork · filter sweep</title>
+<link rel="stylesheet" href="../src/tokens.css">
+<link rel="stylesheet" href="../src/type.css">
+<style>
+  * { box-sizing: border-box; }
+  body { margin:0; background: var(--paper); padding: var(--s-5); }
+  .v { margin-bottom: var(--s-5); }
+  .v h2 { font-size: 92px; margin: 0; }
+  .k {
+    font-family: var(--face-utility); font-size: 11px; font-weight: 500;
+    letter-spacing: .12em; text-transform: uppercase; color: var(--text-mute);
+    display:block; margin-bottom: 6px; padding-bottom: 4px;
+    border-bottom: 1px solid var(--rule);
+  }
+</style>
+</head>
+<body>
+<div id="defs"></div>
+<div id="out"></div>
+<script>
+/* Sweeping the four knobs §5 names, in its stated order of impact:
+   fiber baseFrequency · displacement scale · surfaceScale · transfer intercept */
+const VARIANTS = [
+  { id:"d", fib:0.86, disp:2.6, surf:4.0, icept:0.30, nap:"0.16 0.20", label:"D · round-1 keeper" },
+  { id:"e", fib:0.70, disp:3.4, surf:5.0, icept:0.28, nap:"0.22 0.27", label:"E · round-1 keeper" },
+  { id:"f", fib:0.95, disp:2.2, surf:6.0, icept:0.25, nap:"0.30 0.36", label:"F · round-1 keeper" },
+  { id:"g", fib:0.78, disp:2.8, surf:5.0, icept:0.28, nap:"0.26 0.32", label:"G · E edge + F nap" },
+  { id:"h", fib:0.78, disp:2.8, surf:6.5, icept:0.24, nap:"0.26 0.32", label:"H · G, thicker fabric" },
+  { id:"i", fib:0.78, disp:2.8, surf:5.0, icept:0.32, nap:"0.34 0.42", label:"I · G, finer nap" },
+];
+
+const filt = (v) => `
+<filter id="f-${v.id}" x="-15%" y="-15%" width="130%" height="130%" color-interpolation-filters="sRGB">
+  <feTurbulence type="fractalNoise" baseFrequency="${v.fib}" numOctaves="4" seed="7" result="fibers"/>
+  <feDisplacementMap in="SourceGraphic" in2="fibers" scale="${v.disp * 2.5}" xChannelSelector="R" yChannelSelector="G" result="haloRaw"/>
+  <feGaussianBlur in="haloRaw" stdDeviation="0.6" result="haloBlur"/>
+  <feComponentTransfer in="haloBlur" result="halo"><feFuncA type="linear" slope="0.5"/></feComponentTransfer>
+  <feDisplacementMap in="SourceGraphic" in2="fibers" scale="${v.disp}" xChannelSelector="R" yChannelSelector="G" result="fuzzy"/>
+  <feTurbulence type="fractalNoise" baseFrequency="${v.nap}" numOctaves="5" seed="3" result="nap"/>
+  <feDiffuseLighting in="nap" surfaceScale="${v.surf}" diffuseConstant="1" lighting-color="#ffffff" result="lit">
+    <feDistantLight azimuth="215" elevation="55"/>
+  </feDiffuseLighting>
+  <feComposite in="lit" in2="fuzzy" operator="in" result="litText"/>
+  <feComponentTransfer in="litText" result="litLift">
+    <feFuncR type="linear" slope="${1 - v.icept}" intercept="${v.icept}"/>
+    <feFuncG type="linear" slope="${1 - v.icept}" intercept="${v.icept}"/>
+    <feFuncB type="linear" slope="${1 - v.icept}" intercept="${v.icept}"/>
+  </feComponentTransfer>
+  <feBlend in="litLift" in2="fuzzy" mode="multiply" result="face"/>
+  <feMerge><feMergeNode in="halo"/><feMergeNode in="face"/></feMerge>
+</filter>`;
+
+document.getElementById("defs").innerHTML =
+  `<svg width="0" height="0" style="position:absolute"><defs>${VARIANTS.map(filt).join("")}</defs></svg>`;
+
+/* Each variant shown twice: big enough to judge the nap, and at the 34px
+   floor §5 forbids going below — that is where the nap eats counters. */
+document.getElementById("out").innerHTML = VARIANTS.map((v) => `
+  <div class="v">
+    <span class="k">${v.label} — fib ${v.fib} · disp ${v.disp} · surf ${v.surf} · icept ${v.icept} · nap ${v.nap}</span>
+    <h2 style="filter:url(#f-${v.id})">Handmade</h2>
+    <h2 style="filter:url(#f-${v.id});font-size:34px">Nothing is perfect, at first.</h2>
+  </div>`).join("");
+</script>
+</body>
+</html>

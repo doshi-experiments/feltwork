@@ -1,0 +1,93 @@
+/* ─────────────────────────────────────────────────────────────────────────
+   FELTWORK · the felt headline
+   The one place this design spends its boldness. Everything else stays quiet.
+
+   Real texture on live, selectable, accessible text.
+
+   Hard rules (§5), enforced here where CSS can and documented where it can't:
+     1. Never on body copy. Never below 34px — the nap destroys small-text
+        legibility, which is an accessibility failure, not a style opinion.
+     2. Maximum TWO filtered headings visible in any viewport. Filters are
+        expensive; two is the budget. Not enforceable in CSS — it is a
+        layout decision, and .felt-head--2 exists so the second one at least
+        gets its own seed.
+     3. prefers-reduced-motion drops the halo, keeps the static nap.
+     4. Feature-detect and fall back to the baked tile.
+   ───────────────────────────────────────────────────────────────────────── */
+
+.felt-head {
+  filter: url(#felt);
+  color: var(--text);
+}
+
+/* Second filtered heading on a page. Different seed, so the two do not share
+   a fiber pattern — per §5 that single detail is most of what sells it. */
+.felt-head--2 { filter: url(#felt-2); }
+
+/* On dark the headline is white, and the filter's final stage is a multiply.
+   Against white that uses the full range of the lighting pass and the nap
+   turns into a stony speckle, so the dark variants compress the transfer to
+   land the same apparent depth. Same nap, same seeds, same light source —
+   only the blend compensates for the inverted ground. */
+:root[data-theme="dark"] .felt-head { filter: url(#felt-dark); }
+:root[data-theme="dark"] .felt-head--2 { filter: url(#felt-dark-2); }
+
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) .felt-head { filter: url(#felt-dark); }
+  :root:not([data-theme="light"]) .felt-head--2 { filter: url(#felt-dark-2); }
+}
+
+/* §5.3 — drop the halo branch, keep the nap.
+   The dark rules above are (0,2,1) selectors, so a bare `.felt-head` here
+   would lose to them and reduced-motion would silently keep its halo on the
+   dark sheet. Each theme needs its own rule at matching specificity. */
+@media (prefers-reduced-motion: reduce) {
+  .felt-head,
+  .felt-head--2 { filter: url(#felt-flat); }
+
+  :root[data-theme="dark"] .felt-head,
+  :root[data-theme="dark"] .felt-head--2 { filter: url(#felt-dark-flat); }
+}
+
+@media (prefers-reduced-motion: reduce) and (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) .felt-head,
+  :root:not([data-theme="light"]) .felt-head--2 { filter: url(#felt-dark-flat); }
+}
+
+/* ── Method B — the fallback, and everything the filter is too expensive for
+   ────────────────────────────────────────────────────────────────────────
+   Cheap, works at any size, degrades gracefully. The tile is baked once at
+   build time (scripts/bake-texture.mjs); feTurbulence never runs at runtime
+   for something that can be baked.
+
+   The tile is mid-grey, so it cannot simply be clipped into the text — that
+   would throw away the ink colour and the 11:1 contrast with it. Blending it
+   over background-color in `overlay` keeps the ink and adds only the nap. */
+
+.felt-lite {
+  color: transparent;
+  background-color: var(--text);
+  background-image: url("../tex/felt-1024.png");
+  background-size: 340px;
+  background-blend-mode: overlay;
+  -webkit-background-clip: text;
+          background-clip: text;
+}
+
+/* Note: this @supports test is weak — browsers report url() filter syntax as
+   supported whether or not the referenced SVG filter resolves — so it catches
+   engines with no SVG-filter support at all and not much else. The JS probe in
+   bin/ is the reliable one; this is the no-JS floor. */
+@supports not (filter: url(#felt)) {
+  .felt-head,
+  .felt-head--2 {
+    filter: none;
+    color: transparent;
+    background-color: var(--text);
+    background-image: url("../tex/felt-1024.png");
+    background-size: 340px;
+    background-blend-mode: overlay;
+    -webkit-background-clip: text;
+            background-clip: text;
+  }
+}
