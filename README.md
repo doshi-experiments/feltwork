@@ -21,7 +21,7 @@ the styling it had before:
 | experiments-landing | `0810f2b` | reverted in `1d98944` |
 | mr-shake | `e609f9f` | reverted in `74bf0a5` |
 | rent-vs-buy-calculator | `0227ca8` | reverted in `9db87c9` |
-| portfolio-landing | never committed | untouched |
+| portfolio-landing | `e33f5ac` | reverted in `eeac4b0` |
 
 The reverts are plain `git revert`s and record no reason, so none is claimed
 here. Treat the rest of this README as documentation of **what Feltwork is**
