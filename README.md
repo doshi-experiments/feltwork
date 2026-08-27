@@ -10,55 +10,36 @@ Everything is then upholstered. Every visual decision traces to one of two
 sources — Rams/Vitsœ discipline, or felt physics (matte, soft, compressible,
 fibrous, no gloss). Anything that traces to neither gets cut.
 
-Consumed as a devDependency by `portfolio-landing`, `experiments-landing`,
-`mr-shake` and `rent-vs-buy-calculator`.
+## Status: shelved — nothing consumes this today
 
-## Status
+It was rolled out to all four sites and then **reverted from every one of
+them**. As of August 2026 no repo depends on Feltwork; each site is back on
+the styling it had before:
 
-Built in §10's mandated order, and rolled out to all four sites.
+| Site | Feltwork rollout | Now |
+|---|---|---|
+| experiments-landing | `0810f2b` | reverted in `1d98944` |
+| mr-shake | `e609f9f` | reverted in `74bf0a5` |
+| rent-vs-buy-calculator | `0227ca8` | reverted in `9db87c9` |
+| portfolio-landing | never committed | untouched |
 
-- [x] 1 · `tokens.css`
-- [x] 2 · **the felt headline** (the gate)
-- [x] 3 · the isometric icons — all four source objects
-- [x] 4 · the rail and grid
-- [x] 5 · cards and the compression interaction
-- [x] 6 · content and copy — all four sites
-- [x] 7 · accessibility pass — all four sites
+The reverts are plain `git revert`s and record no reason, so none is claimed
+here. Treat the rest of this README as documentation of **what Feltwork is**
+— which is still accurate — rather than of anything currently in production.
 
-| Site | |
-|---|---|
-| portfolio-landing | Bauhaus model rebuilt in true isometric felt |
-| experiments-landing | the index on the rail |
-| mr-shake | tokens + compression; 85 e2e assertions still green |
-| rent-vs-buy-calculator | Tailwind removed; Recharts fed from the tokens |
+Picking it back up means, per site: adding `feltwork` as a devDependency
+(`github:doshi-experiments/feltwork` — a `file:../feltwork` path won't
+resolve in CI, since Cloudflare checks out one repo), then reversing the
+revert. `portfolio-landing` and `experiments-landing` would also each gain a
+build step they don't currently have, which means changing their deploy
+settings by hand rather than only shipping code.
 
-Verification:
+The package itself still builds and verifies on its own:
 
 ```
 node scripts/audit.mjs [dir]   # 7 static §12 checks, per codebase
 node scripts/check.mjs         # 16 checks in a real browser
 ```
-
-All five codebases pass all seven static checks; the package passes all
-sixteen browser checks. mr-shake's own suites (120 rules + 85 browser
-assertions) still pass unchanged — its class names were deliberately left
-alone, so its e2e suite acted as the regression harness for the redesign.
-
-### One thing left for you
-
-`package.json` in each site declares `feltwork` as
-`github:doshi-experiments/feltwork`. **That repo has to be pushed before CI can
-resolve it** — Cloudflare checks out one repo, so a `file:../feltwork` path
-would not work there. Local builds already work: each `build.sh` falls back to
-a sibling checkout when the dependency is not installed.
-
-Two deploy settings also need changing by hand, because both sites are gaining
-a build step they did not have:
-
-- **portfolio-landing** (Cloudflare Pages): build command `npm run build`,
-  output directory `dist`.
-- **experiments-landing**: `wrangler.jsonc` now points at `./dist`, which is a
-  code change rather than a dashboard one — nothing to do beyond shipping it.
 
 ## What's here
 
@@ -96,7 +77,8 @@ renders solid black. `feltwork build` emits them as files to inline; in
 
 Each hue carries one permanent meaning and is never reused for anything else.
 Landing sites use the category meanings; each app documents its own local
-binding, because "undercover" does not map onto "things written".
+binding, because "undercover" does not map onto "things written". (The
+per-app columns below describe the reverted rollout, not current code.)
 
 | | landing sites | mr-shake | rent-vs-buy |
 |---|---|---|---|
