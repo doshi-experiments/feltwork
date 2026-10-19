@@ -2,6 +2,11 @@
 
 The shared design system for rishabhdoshi.com and its experiments.
 
+> **Shelved.** Not to be confused with **Felt**, the identity that
+> `@doshi-experiments/design-system` has carried since release 0.6.0 (October
+> 2026). That system shares the idea of soft, matte material but none of this
+> repository's code, filters or texture. Nothing consumes Feltwork.
+
 > Braun gave you the grid, the restraint and the honest label.
 > Felt is the material it's all made of.
 
