@@ -120,3 +120,7 @@ npm run fonts    # copy the variable woff2s into ./fonts
 node scripts/shoot.mjs proof/headline.html out.png 1300 1750 light 2
 node scripts/check.mjs
 ```
+
+## Licence
+
+MIT, see [LICENSE](LICENSE). The exception: the Archivo, Hanken Grotesk and Martian Mono font files in `fonts/` are under the SIL Open Font License 1.1, each with its licence beside it.
