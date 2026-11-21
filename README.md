@@ -1,6 +1,8 @@
 # Feltwork
 
-The shared design system for rishabhdoshi.com and its experiments.
+An earlier design system for rishabhdoshi.com and its experiments, now shelved.
+The shared design system today is
+[`@doshi-experiments/design-system`](https://github.com/doshi-experiments/design-system).
 
 > **Shelved.** Not to be confused with **Felt**, the identity that
 > `@doshi-experiments/design-system` has carried since release 0.6.0 (October
